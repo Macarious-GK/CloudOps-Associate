@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Photo Upload & Presign</title>
+</head>
+<body>
+    <h2>Upload Photo</h2>
+
+    <form id="uploadForm">
+        {% csrf_token %}
+        <input type="file" id="photoInput" name="photo" accept="image/*" required />
+        <button type="submit">Upload</button>
+    </form>
+
+    <hr>
+
+    <h2>Get Presigned URL</h2>
+    <form id="presignForm">
+        {% csrf_token %}
+        <input type="text" id="keyInput" placeholder="Enter S3 key" required />
+        <button type="submit">Get Presigned URL</button>
+    </form>
+
+    <h3>Result</h3>
+    <img id="preview" style="max-width:400px; display:none;" />
+    <br><br>
+    <a id="downloadLink" style="display:none;" target="_blank">Download Photo</a>
+
+    <script src="{% static 'photos/upload.js' %}"></script>
+</body>
+</html>
