@@ -19,6 +19,15 @@ AWS_ROLE_ARN=
 AWS_EXTERNAL_ID=
 ```
 
+## APP Auth
+- Create a User for the app with no permission but allow for sts-assume Role
+- Create a Role with specific rules needed for the least privileged permission and with trust policy to the User used by the APP
+
+## DB Creds
+- Use Secret Manager to store RDS secrets 
+- Retrieve secrets as Dict the use it.
+
+
 ## APIs
 | Path           | View                | Description                    |
 | -------------- | ------------------- | ------------------------------ |
@@ -28,6 +37,4 @@ AWS_EXTERNAL_ID=
 
 
 ## Upcoming
-- Create secrets for the RDS 
-- Use Secret manager to retrive secrets to access the RDS
 - Make Logs to CloudWatch

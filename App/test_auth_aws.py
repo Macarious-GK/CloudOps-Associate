@@ -1,8 +1,9 @@
 import boto3
+from botocore.exceptions import ClientError
 import os
 import uuid
 from dotenv import load_dotenv
-
+import json
 # Load .env variables
 load_dotenv() 
 
@@ -52,14 +53,36 @@ def generate_presigned_url(s3_client, bucket, key, expiration=3600):
     return url
 
 
-
 s3_client = session.client('s3')
 buckets = generate_presigned_url(s3_client, os.getenv('S3_BUCKET'), 'photos/bc3595d9-a1da-46f0-aaff-2f016ade33dc')
-print( buckets)
+
 ####################### Secrets Manager Client ######################
-# secrets_client = session.client('secretsmanager')
-# resp = secrets_client.get_secret_value(SecretId=os.getenv('RDS_SECRET_ID'))
-# print(resp['SecretString'])
+
+def get_secret(secret_name):
+
+    secret_name = secret_name
+
+    # Create a Secrets Manager client
+    client = session.client(
+        service_name='secretsmanager'
+    )
+
+    try:
+        get_secret_value_response = client.get_secret_value(
+            SecretId=secret_name
+        )
+    except ClientError as e:
+        # For a list of exceptions thrown, see
+        # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+        raise e
+
+    secret = get_secret_value_response['SecretString']
+    return secret
+
+get_secret("mac/heart/inner")
+secret_out = get_secret("mac/heart/inner/db")
+secret_out_dict = json.loads(secret_out)
+print(secret_out_dict['username'])
 # ####################### Parameter Store Client ######################
 # ssm_client = session.client('ssm')
 # param = ssm_client.get_parameter(

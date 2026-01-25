@@ -2,4 +2,4 @@
 from .aws_session import SESSION
 
 S3_CLIENT = SESSION.client('s3')
-
+SECRETS_CLIENT = SESSION.client("secretsmanager")

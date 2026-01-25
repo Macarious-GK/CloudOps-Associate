@@ -1,2 +1,3 @@
 App/env/
 App/.env
+App/test_auth_aws.py
