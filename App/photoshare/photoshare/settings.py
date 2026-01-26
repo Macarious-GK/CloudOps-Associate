@@ -80,36 +80,37 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-from ..v1.aws_clients import SECRETS_CLIENT
-from botocore.exceptions import ClientError
-import json
+# from ..v1.aws_clients import SECRETS_CLIENT
+# from botocore.exceptions import ClientError
+# import json
 
-DB_SECRET_NAME = "mac/heart/inner/db"
+# DB_SECRET_NAME = "mac/heart/inner/db"
 
-try:
-    get_secret_value_response = SECRETS_CLIENT.get_secret_value(
-        SecretId=DB_SECRET_NAME
-    )
-except ClientError as e:
-    # For a list of exceptions thrown, see
-    # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-    raise e
+# try:
+#     get_secret_value_response = SECRETS_CLIENT.get_secret_value(
+#         SecretId=DB_SECRET_NAME
+#     )
+# except ClientError as e:
+#     # For a list of exceptions thrown, see
+#     # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+#     raise e
 
-secret = get_secret_value_response['SecretString']
-DB_SECRET = json.loads(secret)
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": DB_SECRET["dbname"],
-        "USER": DB_SECRET["username"],
-        "PASSWORD": DB_SECRET["password"],
-        "HOST": DB_SECRET["host"],
-        "PORT": int(DB_SECRET["port"]),
-        "OPTIONS": {
-            "connect_timeout": 10,
-        }
-    }
-}
+# secret = get_secret_value_response['SecretString']
+# DB_SECRET = json.loads(secret)
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": DB_SECRET["dbname"],
+#         "USER": DB_SECRET["username"],
+#         "PASSWORD": DB_SECRET["password"],
+#         "HOST": DB_SECRET["host"],
+#         "PORT": int(DB_SECRET["port"]),
+#         "OPTIONS": {
+#             "connect_timeout": 10,
+#         }
+#     }
+# }
+
 STATIC_URL = 'static/'
 
 

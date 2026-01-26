@@ -28,6 +28,39 @@
     <br><br>
     <a id="downloadLink" style="display:none;" target="_blank">Download Photo</a>
 
+ <!-- NEW: CloudWatch Log Test -->
+    <h2>CloudWatch Logs Test</h2>
+    <button id="sendLogBtn">Send Log to CloudWatch</button>
+    <p id="logStatus"></p>
+
+    <h3>Result</h3>
+    <img id="preview" style="max-width:400px; display:none;" />
+    <br><br>
+    <a id="downloadLink" style="display:none;" target="_blank">Download Photo</a>
+
     <script src="{% static 'photos/upload.js' %}"></script>
-</body>
+
+    <!-- NEW: Inline JS for log button -->
+    <script>
+        document.getElementById("sendLogBtn").addEventListener("click", function () {
+            fetch("/api/logs", {
+                method: "GET",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("logStatus").innerText =
+                    "✅ Log sent to CloudWatch!";
+                console.log("CloudWatch response:", data);
+            })
+            .catch(error => {
+                document.getElementById("logStatus").innerText =
+                    "❌ Failed to send log.";
+                console.error("Error:", error);
+            });
+        });
+    </script>
+    </body>
 </html>

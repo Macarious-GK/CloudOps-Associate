@@ -3,11 +3,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Photo
-from .aws_clients import S3_CLIENT
+from .aws_clients import *
 
 import json
 import os
 import uuid
+import time
 from dotenv import load_dotenv
 
 load_dotenv() 
@@ -101,3 +102,38 @@ def presign_key_view(request):
             'error': 'Failed to generate presigned URL',
             'details': str(e)
         }, status=500)
+
+
+
+
+def send_log(request):
+    LOG_GROUP = "django"
+    LOG_STREAM = "test"
+    message = "Hello CloudWatch from Django!"
+    timestamp = int(time.time() * 1000)
+
+    # get token
+    streams = CloudWatch_CLIENT.describe_log_streams(
+        logGroupName=LOG_GROUP,
+        logStreamNamePrefix=LOG_STREAM
+    )
+
+    token = streams["logStreams"][0].get("uploadSequenceToken")
+
+    data = {
+        "logGroupName": LOG_GROUP,
+        "logStreamName": LOG_STREAM,
+        "logEvents": [
+            {
+                "timestamp": timestamp,
+                "message": message
+            }
+        ]
+    }
+
+    if token:
+        data["sequenceToken"] = token
+
+    CloudWatch_CLIENT.put_log_events(**data)
+
+    return JsonResponse({"status": "sent to cloudwatch"})
