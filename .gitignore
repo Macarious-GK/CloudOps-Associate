@@ -1,3 +1,5 @@
 App/env/
 App/.env
 App/test_auth_aws.py
+Terraform/env/Dev/.terraform/
+Terraform/env/Dev/.terraform.lock.hcl
