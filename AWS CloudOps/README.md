@@ -74,4 +74,14 @@
     - When EventTime
     - What Region, resource
 
-- It tracks Management Events (Default) , Data Events
+- It tracks:
+    - Management Events (Default): login, configure IAM & etc.
+    - Data Events: track specific events for aws service like S3 & Lambda
+    - ***`Enable log file validation (detect tampering)`***
+
+```txt
+CloudTrail = the service
+Event = “Someone did something” (e.g., DeleteBucket)
+Trail = the rule that says:
+“Record these events and store them here”
+```
