@@ -73,11 +73,12 @@
     - Where Source IP Address
     - When EventTime
     - What Region, resource
-
+## Trail
 - It tracks:
     - Management Events (Default): login, configure IAM & etc.
     - Data Events: track specific events for aws service like S3 & Lambda
     - ***`Enable log file validation (detect tampering)`***
+- And store this events in S3 Buckets / send them to cloudwatch Logs Group
 
 ```txt
 CloudTrail = the service
