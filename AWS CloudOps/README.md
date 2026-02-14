@@ -86,3 +86,62 @@ Event = “Someone did something” (e.g., DeleteBucket)
 Trail = the rule that says:
 “Record these events and store them here”
 ```
+
+
+
+
+# AWS Config
+- AWS Config is a Compliance-as-code tool to manage change in AWS per region 
+- Config stores snapshots in S3
+- Change Management 
+    - Monitor configuration changes
+    - Track who made changes (via CloudTrail integration)
+    - Evaluate compliance
+    - Remediate non-compliant resources
+
+
+- CAC Compliance-as-code.
+    - Automate the monitoring & enforce and remediating changes according to compliance 
+
+- ⚠️ Important: `AWS Config does NOT prevent changes by default — it detects and evaluates them.`
+
+## Resources invertor
+- show you all resource created in a region
+
+## Recourse timeline
+- It shows a timeline of changes to a resource:
+    - Configuration Timeline → How the resource changed over time
+    - Compliance Timeline → When it was compliant/non-compliant
+- This is the full recorded state of the resource at that moment.
+    - It shows what happen, what changes, before & after
+    - `It doesn't contain API Operation or who did the change` -> go to cloudtrail for this.
+    
+## Rules 
+- rules are set to check of a desired configuration is met or not 
+- Types:
+    - AWS Managed Rules (predefined)
+    - AWS custom rules (you define logic)
+- Rule Triggers:
+    - Configuration changes
+    - Periodic 
+
+## Automatic/Manual Triggered remediation
+- The Action of reversion or stopping or correcting something
+- Automatic remediation usually uses:
+    - AWS Systems Manager Automation documents
+
+## Conformance Pack
+- A collection of rules and remediation actions that can be deployed as single entity
+
+## Aggregation  
+- Aggregate AWS Config data from:
+    - Multiple accounts
+    - Multiple regions
+- Used in multi-account environments
+
+
+# AWS Security Hub
+- It's a Security posture management Tool
+- It generate a security score to determine your security posture
+- It depends on AWS Config to be able to work
+- Security Hub depends on AWS Config evaluations.
